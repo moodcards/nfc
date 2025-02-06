@@ -114,34 +114,60 @@ END:VCARD`
     }
   }
 
-  const handleAddToWallet = async () => {
-    try {
-      const response = await fetch("/api/wallet", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: contactInfo.name[language],
-          title: contactInfo.title[language],
-          company: contactInfo.company,
-          email: contactInfo.email,
-          phone: contactInfo.phone,
-          website: contactInfo.website,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error("Failed to generate pass")
-      }
-
-      const { url } = await response.json()
-      window.location.href = url
-      toast.success(language === "en" ? "Opening Apple Wallet..." : "Открывается Apple Wallet...")
-    } catch (error) {
-      console.error("Error:", error)
-      toast.error(language === "en" ? "Failed to open Apple Wallet" : "Не удалось открыть Apple Wallet")
+  const handleAddToWallet = () => {
+    const passData = {
+      name: contactInfo.name[language],
+      title: contactInfo.title[language],
+      company: contactInfo.company,
+      email: contactInfo.email,
+      phone: contactInfo.phone,
+      website: contactInfo.website,
     }
+
+    // Create pass data directly in the client
+    const walletData = {
+      description: `${passData.name}'s Business Card`,
+      formatVersion: 1,
+      organizationName: passData.company,
+      serialNumber: Date.now().toString(),
+      generic: {
+        primaryFields: [
+          {
+            key: "name",
+            label: "NAME",
+            value: passData.name,
+          },
+        ],
+        secondaryFields: [
+          {
+            key: "title",
+            label: "TITLE",
+            value: passData.title,
+          },
+        ],
+        auxiliaryFields: [
+          {
+            key: "email",
+            label: "EMAIL",
+            value: passData.email,
+          },
+          {
+            key: "phone",
+            label: "PHONE",
+            value: passData.phone,
+          },
+        ],
+      },
+      backgroundColor: "rgb(63, 61, 140)",
+      foregroundColor: "rgb(255, 255, 255)",
+      labelColor: "rgb(255, 255, 255)",
+      logoText: passData.company,
+    }
+
+    // Create and redirect to Apple Wallet URL
+    const applePassUrl = `https://wallet.apple.com/passes/create?data=${encodeURIComponent(JSON.stringify(walletData))}`
+    window.location.href = applePassUrl
+    toast.success(language === "en" ? "Opening Apple Wallet..." : "Открывается Apple Wallet...")
   }
 
   // Removed copyToClipboard function
