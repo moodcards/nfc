@@ -44,6 +44,10 @@ export default function ContactCard() {
     return () => clearTimeout(timer)
   }, [])
 
+  useEffect(() => {
+    document.documentElement.style.backgroundColor = isDark ? "#020617" : "#f8fafc"
+  }, [isDark])
+
   const contactInfo = {
     name: {
       en: "John Doe",
@@ -226,7 +230,7 @@ END:VCARD`
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
-        isDark ? "bg-background text-white" : "bg-gray-50 text-gray-900"
+        isDark ? "bg-slate-950 text-white" : "bg-gray-50 text-gray-900"
       }`}
     >
       {/* Header Image */}
@@ -373,7 +377,7 @@ END:VCARD`
             <Button
               variant="outline"
               className={`w-full ${
-                isDark ? "border-gray-700 text-white hover:bg-gray-800" : "border-gray-200 hover:bg-gray-50"
+                isDark ? "border-gray-700 text-white hover:bg-gray-800" : "border-gray-200  text-white hover:bg-gray-50"
               } transition-colors`}
               onClick={handleShare}
             >
@@ -383,7 +387,7 @@ END:VCARD`
             <Button
               variant="outline"
               className={`w-full ${
-                isDark ? "border-gray-700 text-white hover:bg-gray-800" : "border-gray-200 hover:bg-gray-50"
+                isDark ? "border-gray-700 text-white hover:bg-gray-800" : "border-gray-200 text-white hover:bg-gray-50"
               } transition-colors`}
               onClick={handleAddToWallet}
             >
