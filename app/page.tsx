@@ -14,15 +14,17 @@ import {
   Download,
   Share2,
   Phone,
-  Wallet,
   Moon,
   Sun,
   Languages,
   ArrowUpRight,
+  QrCode,
 } from "lucide-react"
 import { toast, Toaster } from "react-hot-toast"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Loader } from "@/components/ui/loader"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function ContactCard() {
   const [showQR, setShowQR] = useState(false)
@@ -30,14 +32,14 @@ export default function ContactCard() {
   const [language, setLanguage] = useState<"en" | "ru">("en")
   const [mounted, setMounted] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [qrCodeData, setQrCodeData] = useState<string>("")
+  const [selectedInfo, setSelectedInfo] = useState<string>("all")
 
   useEffect(() => {
     setMounted(true)
-    // Check system preference for dark mode
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       setIsDark(true)
     }
-    // Simulate loading delay
     const timer = setTimeout(() => {
       setIsLoading(false)
     }, 1500)
@@ -118,63 +120,33 @@ END:VCARD`
     }
   }
 
-  const handleAddToWallet = () => {
-    const passData = {
-      name: contactInfo.name[language],
-      title: contactInfo.title[language],
-      company: contactInfo.company,
-      email: contactInfo.email,
-      phone: contactInfo.phone,
-      website: contactInfo.website,
+  const generateQRCodeData = (info: string) => {
+    let data = ""
+    switch (info) {
+      case "all":
+        data = `${contactInfo.name[language]}\n${contactInfo.title[language]}\n${contactInfo.company}\n${contactInfo.email}\n${contactInfo.phone}\n${contactInfo.website}`
+        break
+      case "email":
+        data = contactInfo.email
+        break
+      case "phone":
+        data = contactInfo.phone
+        break
+      case "website":
+        data = `https://${contactInfo.website}`
+        break
+      case "linkedin":
+        data = `https://${contactInfo.linkedin}`
+        break
+      default:
+        data = window.location.href
     }
-
-    // Create pass data directly in the client
-    const walletData = {
-      description: `${passData.name}'s Business Card`,
-      formatVersion: 1,
-      organizationName: passData.company,
-      serialNumber: Date.now().toString(),
-      generic: {
-        primaryFields: [
-          {
-            key: "name",
-            label: "NAME",
-            value: passData.name,
-          },
-        ],
-        secondaryFields: [
-          {
-            key: "title",
-            label: "TITLE",
-            value: passData.title,
-          },
-        ],
-        auxiliaryFields: [
-          {
-            key: "email",
-            label: "EMAIL",
-            value: passData.email,
-          },
-          {
-            key: "phone",
-            label: "PHONE",
-            value: passData.phone,
-          },
-        ],
-      },
-      backgroundColor: "rgb(63, 61, 140)",
-      foregroundColor: "rgb(255, 255, 255)",
-      labelColor: "rgb(255, 255, 255)",
-      logoText: passData.company,
-    }
-
-    // Create and redirect to Apple Wallet URL
-    const applePassUrl = `https://wallet.apple.com/passes/create?data=${encodeURIComponent(JSON.stringify(walletData))}`
-    window.location.href = applePassUrl
-    toast.success(language === "en" ? "Opening Apple Wallet..." : "Открывается Apple Wallet...")
+    setQrCodeData(data)
   }
 
-  // Removed copyToClipboard function
+  useEffect(() => {
+    generateQRCodeData(selectedInfo)
+  }, [selectedInfo, language, contactInfo])
 
   const contactLinks = [
     {
@@ -283,7 +255,7 @@ END:VCARD`
               alt="Biz Franchise Logo"
               width={120}
               height={40}
-              className={`h-8 w-auto transition-all duration-300 ${isDark ? "brightness-200" : "brightness-200"}`}
+              className={`h-8 w-auto transition-all duration-300 ${isDark ? "brightness-200" : "brightness-100"}`}
             />
           </div>
         </div>
@@ -304,9 +276,9 @@ END:VCARD`
                 <Image
                   src="https://cdn-icons-png.flaticon.com/512/10438/10438146.png"
                   alt={contactInfo.name[language]}
-                  width={160}
-                  height={160}
-                  className="rounded-full border-4 border-white shadow-xl"
+                  width={120}
+                  height={120}
+                  className="rounded-full border-4 border-white shadow-xl sm:w-32 sm:h-32 md:w-40 md:h-40"
                 />
               </motion.div>
 
@@ -316,7 +288,7 @@ END:VCARD`
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className={`text-3xl font-bold mb-2`}
+                  className={`text-2xl sm:text-3xl font-bold mb-2`}
                 >
                   {contactInfo.name[language]}
                 </motion.h1>
@@ -324,7 +296,7 @@ END:VCARD`
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className={`text-lg mb-1 ${isDark ? "text-gray-300" : "text-gray-600"}`}
+                  className={`text-base sm:text-lg mb-1 ${isDark ? "text-gray-300" : "text-gray-600"}`}
                 >
                   {contactInfo.title[language]}
                 </motion.p>
@@ -332,7 +304,7 @@ END:VCARD`
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  className={isDark ? "text-gray-400" : "text-gray-500"}
+                  className={`text-sm sm:text-base ${isDark ? "text-gray-400" : "text-gray-500"}`}
                 >
                   {contactInfo.location[language]}
                 </motion.p>
@@ -341,19 +313,19 @@ END:VCARD`
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 mb-8 mt-8">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8 mt-6 sm:mt-8">
             {Object.entries(contactInfo.stats).map(([key, value], index) => (
               <motion.div
                 key={key}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 + index * 0.1 }}
-                className={`text-center p-4 rounded-xl backdrop-blur-md ${
+                className={`text-center p-2 sm:p-4 rounded-xl backdrop-blur-md ${
                   isDark ? "bg-background-card border border-gray-800" : "bg-white/80 shadow-lg border border-gray-100"
                 }`}
               >
-                <div className={`text-2xl font-bold`}>{value}</div>
-                <div className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                <div className={`text-lg sm:text-2xl font-bold`}>{value}</div>
+                <div className={`text-xs sm:text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>
                   {language === "en" ? key : key === "experience" ? "опыт" : key === "deals" ? "сделки" : "страны"}
                 </div>
               </motion.div>
@@ -368,7 +340,7 @@ END:VCARD`
             className="grid grid-cols-3 gap-3 mb-8"
           >
             <Button
-              className="w-full bg-primary hover:bg-primary-hover text-white transition-colors"
+              className="w-full bg-primary hover:bg-primary-hover text-white transition-colors text-sm sm:text-base py-3 sm:py-4"
               onClick={handleSaveContact}
             >
               <Download className="w-4 h-4 mr-2" />
@@ -377,23 +349,65 @@ END:VCARD`
             <Button
               variant="outline"
               className={`w-full ${
-                isDark ? "border-gray-700 text-white hover:bg-gray-800" : "border-gray-200  text-white hover:bg-gray-50"
-              } transition-colors`}
+                isDark
+                  ? "border-gray-600 text-gray-200 hover:bg-gray-800 hover:text-white"
+                  : "border-gray-300 text-gray-200 hover:bg-gray-100 hover:text-gray-800"
+              } transition-colors text-sm sm:text-base py-3 sm:py-4`}
               onClick={handleShare}
             >
               <Share2 className="w-4 h-4 mr-2" />
               {language === "en" ? "Share" : "Поделиться"}
             </Button>
-            <Button
-              variant="outline"
-              className={`w-full ${
-                isDark ? "border-gray-700 text-white hover:bg-gray-800" : "border-gray-200 text-white hover:bg-gray-50"
-              } transition-colors`}
-              onClick={handleAddToWallet}
-            >
-              <Wallet className="w-4 h-4 mr-2" />
-              {language === "en" ? "Wallet" : "Кошелек"}
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={`w-full ${
+                    isDark
+                      ? "border-gray-600 text-gray-200 hover:bg-gray-800 hover:text-white"
+                      : "border-gray-300 text-gray-200 hover:bg-gray-100 hover:text-gray-800"
+                  } transition-colors text-sm sm:text-base py-3 sm:py-4`}
+                >
+                  <QrCode className="w-4 h-4 mr-2" />
+                  {language === "en" ? "QR Code" : "QR-код"}
+                </Button>
+              </DialogTrigger>
+              <DialogContent className={isDark ? "bg-gray-800 text-white" : "bg-white text-gray-900"}>
+                <DialogHeader>
+                  <DialogTitle>{language === "en" ? "Dynamic QR Code" : "Динамический QR-код"}</DialogTitle>
+                </DialogHeader>
+                <div className="flex flex-col items-center space-y-4">
+                  <Select onValueChange={setSelectedInfo} defaultValue={selectedInfo}>
+                    <SelectTrigger
+                      className={`w-[180px] ${isDark ? "bg-gray-700 text-white" : "bg-white text-gray-900"}`}
+                    >
+                      <SelectValue placeholder="Select info to share" />
+                    </SelectTrigger>
+                    <SelectContent className={isDark ? "bg-gray-700 text-white" : "bg-white text-gray-900"}>
+                      <SelectItem value="all">{language === "en" ? "All Info" : "Вся информация"}</SelectItem>
+                      <SelectItem value="email">{language === "en" ? "Email" : "Электронная почта"}</SelectItem>
+                      <SelectItem value="phone">{language === "en" ? "Phone" : "Телефон"}</SelectItem>
+                      <SelectItem value="website">{language === "en" ? "Website" : "Веб-сайт"}</SelectItem>
+                      <SelectItem value="linkedin">LinkedIn</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <QRCodeSVG
+                    value={qrCodeData}
+                    size={200}
+                    level="H"
+                    includeMargin
+                    bgColor={isDark ? "#1e293b" : "#ffffff"}
+                    fgColor={isDark ? "#e2e8f0" : "#1e293b"}
+                    imageSettings={{
+                      src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bizfranchise-logo-300-RsMRCE1KWOaNO5ytsfyUSdrHnTANJK.png",
+                      height: 40,
+                      width: 40,
+                      excavate: true,
+                    }}
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
           </motion.div>
 
           {/* Contact Links */}
@@ -453,7 +467,7 @@ END:VCARD`
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.6 + index * 0.1 }}
                 className={`text-sm font-medium px-3 py-1 rounded-full ${
-                  isDark ? "bg-gray-800 text-gray-300 hover:bg-gray-700" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  isDark ? "bg-gray-800 text-gray-300 hover:bg-gray-700" : "bg-gray-100 text-gray-300 hover:bg-gray-200"
                 } transition-colors duration-200 cursor-pointer`}
               >
                 {tag}
@@ -494,6 +508,8 @@ END:VCARD`
                   size={200}
                   level="H"
                   includeMargin
+                  bgColor={isDark ? "#1e293b" : "#ffffff"}
+                  fgColor={isDark ? "#ffffff" : "#000000"}
                   imageSettings={{
                     src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bizfranchise-logo-300-RsMRCE1KWOaNO5ytsfyUSdrHnTANJK.png",
                     height: 40,
