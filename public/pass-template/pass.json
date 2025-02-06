@@ -1,0 +1,17 @@
+{
+  "formatVersion": 1,
+  "passTypeIdentifier": "pass.com.bizfranchise.card",
+  "serialNumber": "uniqueSerialNumber",
+  "teamIdentifier": "YOUR_TEAM_ID",
+  "organizationName": "Biz Franchise",
+  "description": "Business Card",
+  "generic": {
+    "primaryFields": [],
+    "secondaryFields": [],
+    "auxiliaryFields": []
+  },
+  "backgroundColor": "rgb(63, 61, 140)",
+  "foregroundColor": "rgb(255, 255, 255)",
+  "labelColor": "rgb(255, 255, 255)"
+}
+
