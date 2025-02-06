@@ -2,10 +2,23 @@ import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   output: "export",
-  // Remove basePath and assetPrefix if you're deploying to the root
   images: {
     unoptimized: true,
-    domains: ["v0.blob.com"],
+  },
+  assetPrefix: process.env.NODE_ENV === "production" ? "/moodcards" : "",
+  basePath: process.env.NODE_ENV === "production" ? "/moodcards" : "",
+  headers: async () => {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Permissions-Policy",
+            value: "interest-cohort=()",
+          },
+        ],
+      },
+    ]
   },
 }
 
