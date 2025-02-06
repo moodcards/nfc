@@ -124,7 +124,7 @@ END:VCARD`
     let data = ""
     switch (info) {
       case "all":
-        data = `${contactInfo.name[language]}\n${contactInfo.title[language]}\n${contactInfo.company}\n${contactInfo.email}\n${contactInfo.phone}\n${contactInfo.website}`
+        data = `https://moodcards.github.io/nfc/`
         break
       case "email":
         data = contactInfo.email
