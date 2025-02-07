@@ -256,7 +256,7 @@ END:VCARD`
         <div className="absolute top-4 left-4 flex items-center gap-4">
           <div className="p-2 rounded-lg transition-all duration-300 bg-white">
             <Image
-                src="https://moodcards.github.io/nfc/public/logo2.png"
+                src="https://moodcards.github.io/nfc/logo2.png"
               alt="Academy of Growth Logo"
               width={120}
               height={40}
@@ -265,7 +265,7 @@ END:VCARD`
           </div>
           <div className="p-2 rounded-lg transition-all duration-300 bg-white">
             <Image
-                src="https://moodcards.github.io/nfc/public/logo1.png"
+                src="https://moodcards.github.io/nfc/logo1.png"
               alt="KAFF Logo"
               width={120}
               height={40}
@@ -288,7 +288,7 @@ END:VCARD`
                   className="mb-4 md:mb-0 md:mr-6"
               >
                 <Image
-                    src="https://moodcards.github.io/nfc/public/profile.jpg"
+                    src="https://moodcards.github.io/nfc/profile.jpg"
                     alt={contactInfo.name[language]}
                     width={120}
                     height={120}
@@ -477,7 +477,7 @@ END:VCARD`
                     rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                     className={`group flex items-center p-4 rounded-xl transition-all duration-300 ${
                         isDark
-                            ? "bg-gray-800 hover:bg-gray-700 border border-gray-700"
+                            ? "bg-gray-800/50 hover:bg-gray-700 border border-gray-700"
                             : "bg-white hover:bg-gray-50 shadow-md hover:shadow-lg border border-gray-200"
                     }`}
                     initial={{opacity: 0, y: 20}}
