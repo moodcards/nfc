@@ -1,7 +1,10 @@
-import type { NextConfig } from "next"
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Enable static HTML export
   output: "export",
+
+  // Ensure proper handling of images
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -19,20 +22,23 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Configure base path for GitHub Pages
-  basePath: process.env.NODE_ENV === "production" ? "/moodcards" : "",
-  assetPrefix: process.env.NODE_ENV === "production" ? "/moodcards" : "",
 
-  // Disable server-side features in static export
+  // Set basePath and assetPrefix for GitHub Pages
+  basePath: "/moodcards",
+  assetPrefix: "/moodcards",
+
+  // TypeScript settings
   typescript: {
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: false, // Strictly enforce build error handling
   },
+
+  // ESLint settings
   eslint: {
-    ignoreDuringBuilds: false,
+    ignoreDuringBuilds: false, // Strictly enforce linting during builds
   },
-  // Enable strict mode for better development experience
+
+  // Enable React's Strict Mode for development
   reactStrictMode: true,
-}
+};
 
-export default nextConfig
-
+export default nextConfig;
