@@ -212,7 +212,7 @@ END:VCARD`
     >
       {/* Header Image */}
       <div className="relative h-64 sm:h-80 md:h-96">
-        <Image src="/moodcards/background.jpg" alt="Cover" fill className="object-cover" />
+        <Image src="/nfc/background.jpg" alt="Cover" fill className="object-cover" />
         <div className={`absolute inset-0 ${isDark ? "bg-gradient-dark" : "bg-gradient-light"}`} />
 
         {/* Theme & Language Toggle */}
@@ -256,7 +256,7 @@ END:VCARD`
         <div className="absolute top-4 left-4 flex items-center gap-4">
           <div className="p-2 rounded-lg transition-all duration-300 bg-white">
             <Image
-                src="/moodcards/logo2.png"
+                src="/nfc/logo2.png"
               alt="Academy of Growth Logo"
               width={120}
               height={40}
@@ -265,7 +265,7 @@ END:VCARD`
           </div>
           <div className="p-2 rounded-lg transition-all duration-300 bg-white">
             <Image
-                src="/moodcards/logo1.png"
+                src="/nfc/logo1.png"
               alt="KAFF Logo"
               width={120}
               height={40}
@@ -288,7 +288,7 @@ END:VCARD`
                   className="mb-4 md:mb-0 md:mr-6"
               >
                 <Image
-                    src="/moodcards/profile.jpg"
+                    src="/nfc/profile.jpg"
                     alt={contactInfo.name[language]}
                     width={120}
                     height={120}
