@@ -10,8 +10,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Biz Franchise - Digital Business Card",
-  description: "Professional Digital Business Card",
+  title: "Asylbekov Saikal - Digital Business Card",
+  description: "Entrepreneur & Franchising Expert",
 }
 
 export default function RootLayout({
