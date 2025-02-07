@@ -19,11 +19,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Configure asset prefix and base path for GitHub Pages
-  assetPrefix: process.env.NODE_ENV === "production" ? "/moodcards" : "",
+  // Configure base path for GitHub Pages
   basePath: process.env.NODE_ENV === "production" ? "/moodcards" : "",
-
-  // Remove headers configuration entirely as it's not compatible with static export
+  assetPrefix: process.env.NODE_ENV === "production" ? "/moodcards" : "",
 
   // Disable server-side features in static export
   typescript: {

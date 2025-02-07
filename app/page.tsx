@@ -212,7 +212,7 @@ END:VCARD`
     >
       {/* Header Image */}
       <div className="relative h-64 sm:h-80 md:h-96">
-        <Image src="https://www.sanfrancisco.net/f/estados-unidos/san-francisco/guia/golden-gate.jpg" alt="Cover" fill className="object-cover" />
+        <Image src="https://moodcards.github.io/nfc/background.jpg" alt="Cover" fill className="object-cover" />
         <div className={`absolute inset-0 ${isDark ? "bg-gradient-dark" : "bg-gradient-light"}`} />
 
         {/* Theme & Language Toggle */}
