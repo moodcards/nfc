@@ -373,8 +373,9 @@ END:VCARD`
                 className="w-full bg-primary hover:bg-primary-hover text-white transition-colors text-base sm:text-lg py-4 sm:py-5"
                 onClick={handleSaveContact}
             >
-              <Download className="w-4 h-4 mr-2"/>
-              {language === "en" ? "Save" : "Сохранить"}
+              <Download className="w-4 h-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">{language === "en" ? "Save" : "Сохранить"}</span>
+                <span className="sm:hidden">{language === "en" ? "Save" : "Сохр.."}</span>
             </Button>
             <Button
                 variant="outline"
@@ -385,8 +386,9 @@ END:VCARD`
                 } transition-colors text-base sm:text-lg py-4 sm:py-5`}
                 onClick={handleShare}
             >
-              <Share2 className="w-4 h-4 mr-2"/>
-              {language === "en" ? "Share" : "Поделиться"}
+              <Share2 className="w-4 h-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">{language === "en" ? "Share" : "Поделиться"}</span>
+                <span className="sm:hidden">{language === "en" ? "Share" : "Под.."}</span>
             </Button>
             <Sheet>
               <SheetTrigger asChild>
@@ -398,9 +400,10 @@ END:VCARD`
                             : "border-gray-300 text-gray-800 bg-white hover:bg-gray-100"
                     } transition-colors text-base sm:text-lg py-4 sm:py-5`}
                 >
-                  <QrCode className="w-4 h-4 mr-2"/>
-                  {language === "en" ? "QR-Code" : "QR-код"}
-                </Button>
+                  <QrCode className="w-4 h-4 mr-1 sm:mr-2" />
+                    <span className="hidden sm:inline">{language === "en" ? "QR Code" : "QR-код"}</span>
+                    <span className="sm:hidden">QR</span>
+                  </Button>
               </SheetTrigger>
               <SheetContent
                   side="bottom"
