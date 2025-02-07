@@ -7,10 +7,10 @@ import { QRCodeSVG } from "qrcode.react"
 import { Button } from "@/components/ui/button"
 import {
   Globe,
-  Linkedin,
+  Send as Telegram,
   Instagram,
   Mail,
-  Calendar,
+  MessageCircleIcon as MessageSquare,
   Download,
   Share2,
   Phone,
@@ -19,11 +19,12 @@ import {
   Languages,
   ArrowUpRight,
   QrCode,
+  X,
 } from "lucide-react"
 import { toast, Toaster } from "react-hot-toast"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Loader } from "@/components/ui/loader"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function ContactCard() {
@@ -34,6 +35,7 @@ export default function ContactCard() {
   const [isLoading, setIsLoading] = useState(true)
   const [qrCodeData, setQrCodeData] = useState<string>("")
   const [selectedInfo, setSelectedInfo] = useState<string>("all")
+  const [isBioExpanded, setIsBioExpanded] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -52,28 +54,31 @@ export default function ContactCard() {
 
   const contactInfo = {
     name: {
-      en: "John Doe",
-      ru: "Джон Доу",
+      en: "Asylbekov Saikal",
+      ru: "Асылбекова Сайкал",
     },
     title: {
-      en: "Business Development Manager",
-      ru: "Менеджер по развитию бизнеса",
+      en: "Entrepreneur & Franchising Expert",
+      ru: "Предприниматель и Эксперт по Франчайзингу",
     },
-    company: "Biz Franchise",
+    role: {
+      en: "CEO & Founder",
+      ru: "CEO и основатель",
+    },
+    company: "BIZ Franchise",
     location: {
-      en: "Bishkek, Kyrgyzstan",
-      ru: "Бишкек, Кыргызстан",
+      en: "Bishkek, KYRGYZSTAN",
+      ru: "Бишкек, КЫРГЫЗСТАН",
     },
-    website: "bizfranchise.kg",
-    linkedin: "linkedin.com/in/johndoe",
-    instagram: "instagram.com/johndoe",
-    email: "john@bizfranchise.kg",
-    phone: "+996 700 123 456",
-    calendly: "calendly.com/johndoe",
-    stats: {
-      experience: "5+ years",
-      deals: "50+",
-      countries: "10+",
+    website: "bizfranchise.org",
+    telegram: "https://t.me/SaikalA",
+    instagram: "https://www.instagram.com/saikal_asylbek/",
+    email: "asylbekovasaikal@gmail.com",
+    phone: "+996 556 781 818",
+    calendly: "calendly.com/saikaasylbekova",
+    bio: {
+      en: "Saikal Asylbekova is a franchising expert and a leader in promoting local franchises across the CIS. She is the inspiration behind and creator of the largest network of supplementary education for children, 'Academy of Growth'. Saika founded the first franchise packaging company 'BIZ Franchise' in Kyrgyzstan, which has helped many entrepreneurs successfully scale their businesses and enter the international market. 'BIZ Franchise' is a brokerage and consulting company founded in 2018, specializing in franchise business development in Kyrgyzstan. The company provides a wide range of services, including franchise packaging, brokerage, consulting, and trademark registration, to help entrepreneurs successfully launch and manage franchises.",
+      ru: "Асылбекова Сайка Фридоновна — эксперт в области франчайзинга, лидер в продвижении локальных франшиз по СНГ. Она является вдохновителем и создателем крупнейшей сети дополнительного образования для детей, 'Академия Роста'. Основала первую компанию по упаковке франшиз 'BIZ Franchise' в Кыргызстане, которая помогла многим предпринимателям успешно масштабировать свои бизнесы и выйти на международный рынок. 'BIZ Franchise' — брокерская и консалтинговая компания, основанная в 2018 году, специализирующаяся на развитии франчайзингового бизнеса в Кыргызстане. Компания предоставляет широкий спектр услуг, включая упаковку франшиз, брокерство, консалтинг и регистрацию товарного знака, чтобы помочь предпринимателям успешно запускать и управлять франшизами.",
     },
   }
 
@@ -135,8 +140,8 @@ END:VCARD`
       case "website":
         data = `https://${contactInfo.website}`
         break
-      case "linkedin":
-        data = `https://${contactInfo.linkedin}`
+      case "telegram":
+        data = `${contactInfo.telegram}`
         break
       default:
         data = window.location.href
@@ -146,32 +151,32 @@ END:VCARD`
 
   useEffect(() => {
     generateQRCodeData(selectedInfo)
-  }, [selectedInfo, language, contactInfo])
+  }, [selectedInfo, generateQRCodeData]) // Added generateQRCodeData to dependencies
 
   const contactLinks = [
-    {
-      icon: Globe,
-      label: { en: "Website", ru: "Вебсайт" },
-      value: contactInfo.website,
-      href: `https://${contactInfo.website}`,
-    },
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      value: contactInfo.linkedin,
-      href: `https://${contactInfo.linkedin}`,
-    },
-    {
-      icon: Instagram,
-      label: "Instagram",
-      value: contactInfo.instagram,
-      href: `https://${contactInfo.instagram}`,
-    },
-    {
+      {
       icon: Mail,
       label: { en: "Email", ru: "Почта" },
       value: contactInfo.email,
       href: `mailto:${contactInfo.email}`,
+    },
+      {
+      icon: Telegram,
+      label: "Telegram",
+      value: "@SaikalA",
+       href: `https://${contactInfo.telegram}`,
+    },
+       {
+      icon: Instagram,
+      label: "Instagram",
+      value: "@saikal_asylbek",
+      href: `https://${contactInfo.instagram}`,
+    },
+    {
+      icon: Globe,
+      label: { en: "Company Website", ru: "Сайт компании" },
+      value: contactInfo.website,
+      href: `https://${contactInfo.website}`,
     },
     {
       icon: Phone,
@@ -180,14 +185,14 @@ END:VCARD`
       href: `tel:${contactInfo.phone}`,
     },
     {
-      icon: Calendar,
-      label: { en: "Schedule a meeting", ru: "Запланировать встречу" },
-      value: "Calendly",
-      href: `https://${contactInfo.calendly}`,
+      icon: MessageSquare,
+      label: "WhatsApp",
+      value: contactInfo.phone,
+      href: `https://wa.me/${contactInfo.phone.replace(/[^0-9]/g, "")}`,
     },
   ]
 
-  const hashtags = ["#BizFranchise", "#BusinessCard", "#Networking", "#Kyrgyzstan"]
+  const hashtags = ["#BizFranchise", "#Franchising", "#Entrepreneurship", "#Kyrgyzstan",]
 
   if (!mounted) return null
 
@@ -248,14 +253,23 @@ END:VCARD`
         </div>
 
         {/* Logo */}
-        <div className="absolute top-4 left-4">
-          <div className="p-2 rounded-lg transition-all duration-300 bg-primary">
+        <div className="absolute top-4 left-4 flex items-center gap-4">
+          <div className="p-2 rounded-lg transition-all duration-300 bg-white">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bizfranchise-logo-300-RsMRCE1KWOaNO5ytsfyUSdrHnTANJK.png"
-              alt="Biz Franchise Logo"
+                src="https://moodcards.github.io/nfc/public/logo2.png"
+              alt="Academy of Growth Logo"
               width={120}
               height={40}
-              className={`h-8 w-auto transition-all duration-300 ${isDark ? "brightness-200" : "brightness-100"}`}
+              className={`h-8 w-auto transition-all duration-300`}
+            />
+          </div>
+          <div className="p-2 rounded-lg transition-all duration-300 bg-white">
+            <Image
+                src="https://moodcards.github.io/nfc/public/logo1.png"
+              alt="KAFF Logo"
+              width={120}
+              height={40}
+              className={`h-8 w-auto transition-all duration-300`}
             />
           </div>
         </div>
@@ -263,189 +277,234 @@ END:VCARD`
 
       {/* Profile Section */}
       <div className="relative px-4 pb-4 -mt-20 md:-mt-32">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl mx-auto">
+        <motion.div initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0}} className="max-w-4xl mx-auto">
           <div className="md:flex md:items-end md:justify-between">
             <div className="md:flex md:items-center">
               {/* Profile Image */}
               <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="mb-4 md:mb-0 md:mr-6"
+                  initial={{scale: 0.8, opacity: 0}}
+                  animate={{scale: 1, opacity: 1}}
+                  transition={{delay: 0.2}}
+                  className="mb-4 md:mb-0 md:mr-6"
               >
                 <Image
-                  src="https://cdn-icons-png.flaticon.com/512/10438/10438146.png"
-                  alt={contactInfo.name[language]}
-                  width={120}
-                  height={120}
-                  className="rounded-full border-4 border-white shadow-xl sm:w-32 sm:h-32 md:w-40 md:h-40"
+                    src="https://moodcards.github.io/nfc/public/profile.jpg"
+                    alt={contactInfo.name[language]}
+                    width={120}
+                    height={120}
+                    className="rounded-full border-4 border-white shadow-xl sm:w-32 sm:h-32 md:w-40 md:h-40"
                 />
               </motion.div>
 
               {/* Profile Info */}
-              <div className="mb-8 md:mb-0">
+              <div className="mb-6 md:mb-0">
                 <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className={`text-2xl sm:text-3xl font-bold mb-2`}
+                    initial={{opacity: 0, y: 20}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{delay: 0.3}}
+                    className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3"
                 >
                   {contactInfo.name[language]}
                 </motion.h1>
                 <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className={`text-base sm:text-lg mb-1 ${isDark ? "text-gray-300" : "text-gray-600"}`}
+                    initial={{opacity: 0, y: 20}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{delay: 0.4}}
+                    className="text-lg sm:text-xl md:text-2xl mb-2 "
                 >
                   {contactInfo.title[language]}
                 </motion.p>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className={`text-sm sm:text-base ${isDark ? "text-gray-400" : "text-gray-500"}`}
+                <motion.div
+                    initial={{opacity: 0, y: 20}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{delay: 0.5}}
+                    className="flex flex-col sm:flex-row sm:items-center text-gray-500 text-base sm:text-lg"
                 >
-                  {contactInfo.location[language]}
-                </motion.p>
+                  <span>{`${contactInfo.role[language]} | ${contactInfo.company}`}</span>
+                  <span className="hidden sm:inline mx-2">|</span>
+                  <span>{contactInfo.location[language]}</span>
+                </motion.div>
               </div>
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8 mt-6 sm:mt-8">
-            {Object.entries(contactInfo.stats).map(([key, value], index) => (
-              <motion.div
-                key={key}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 + index * 0.1 }}
-                className={`text-center p-2 sm:p-4 rounded-xl backdrop-blur-md ${
-                  isDark ? "bg-background-card border border-gray-800" : "bg-white/80 shadow-lg border border-gray-100"
-                }`}
+          {/* Bio Section */}
+          <motion.div
+              initial={{opacity: 0, y: 20}}
+              animate={{opacity: 1, y: 0}}
+              transition={{delay: 0.6}}
+              className={`mt-6 p-6 rounded-xl ${
+                  isDark ? "bg-gray-800/50 text-gray-200" : "bg-white text-gray-800"
+              } shadow-sm border`}
+          >
+            <div className="relative">
+              <p
+                  className={`text-base sm:text-lg ${isDark ? "text-gray-300" : "text-gray-600"} ${
+                      !isBioExpanded ? "line-clamp-3" : ""
+                  }`}
               >
-                <div className={`text-lg sm:text-2xl font-bold`}>{value}</div>
-                <div className={`text-xs sm:text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>
-                  {language === "en" ? key : key === "experience" ? "опыт" : key === "deals" ? "сделки" : "страны"}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                {contactInfo.bio[language]}
+              </p>
+              <button
+                  onClick={() => setIsBioExpanded(!isBioExpanded)}
+                  className={`mt-2 text-sm font-medium ${
+                      isDark ? "text-primary-400 hover:text-primary-300" : "text-primary-600 hover:text-primary-700"
+                  }`}
+              >
+                {isBioExpanded
+                    ? language === "en"
+                        ? "Read less"
+                        : "Свернуть"
+                    : language === "en"
+                        ? "Read more"
+                        : "Читать далее"}
+              </button>
+            </div>
+          </motion.div>
 
           {/* Action Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9 }}
-            className="grid grid-cols-3 gap-3 mb-8"
+              initial={{opacity: 0, y: 20}}
+              animate={{opacity: 1, y: 0}}
+              transition={{delay: 0.9}}
+              className="grid grid-cols-3 gap-3 mb-8 mt-8"
           >
             <Button
-              className="w-full bg-primary hover:bg-primary-hover text-white transition-colors text-sm sm:text-base py-3 sm:py-4"
-              onClick={handleSaveContact}
+                className="w-full bg-primary hover:bg-primary-hover text-white transition-colors text-base sm:text-lg py-4 sm:py-5"
+                onClick={handleSaveContact}
             >
-              <Download className="w-4 h-4 mr-2" />
+              <Download className="w-6 h-6 mr-3"/>
               {language === "en" ? "Save" : "Сохранить"}
             </Button>
             <Button
-              variant="outline"
-              className={`w-full ${
-                isDark
-                  ? "border-gray-600 text-gray-200 hover:bg-gray-800 hover:text-white"
-                  : "border-gray-300 text-gray-200 hover:bg-gray-100 hover:text-gray-800"
-              } transition-colors text-sm sm:text-base py-3 sm:py-4`}
-              onClick={handleShare}
+                variant="outline"
+                className={`w-full ${
+                    isDark
+                        ? "border-gray-600 text-gray-200 hover:bg-gray-800 hover:text-white"
+                        : "border-gray-300 text-gray-700 bg-white hover:bg-gray-100"
+                } transition-colors text-base sm:text-lg py-4 sm:py-5`}
+                onClick={handleShare}
             >
-              <Share2 className="w-4 h-4 mr-2" />
+              <Share2 className="w-5 h-5 mr-3"/>
               {language === "en" ? "Share" : "Поделиться"}
             </Button>
-            <Dialog>
-              <DialogTrigger asChild>
+            <Sheet>
+              <SheetTrigger asChild>
                 <Button
-                  variant="outline"
-                  className={`w-full ${
-                    isDark
-                      ? "border-gray-600 text-gray-200 hover:bg-gray-800 hover:text-white"
-                      : "border-gray-300 text-gray-200 hover:bg-gray-100 hover:text-gray-800"
-                  } transition-colors text-sm sm:text-base py-3 sm:py-4`}
+                    variant="outline"
+                    className={`w-full ${
+                        isDark
+                            ? "border-gray-600 text-gray-200 hover:bg-gray-800 hover:text-white"
+                            : "border-gray-300 text-gray-800 bg-white hover:bg-gray-100"
+                    } transition-colors text-base sm:text-lg py-4 sm:py-5`}
                 >
-                  <QrCode className="w-4 h-4 mr-2" />
+                  <QrCode className="w-5 h-5 mr-3"/>
                   {language === "en" ? "QR Code" : "QR-код"}
                 </Button>
-              </DialogTrigger>
-              <DialogContent className={isDark ? "bg-gray-800 text-white" : "bg-white text-gray-900"}>
-                <DialogHeader>
-                  <DialogTitle>{language === "en" ? "Dynamic QR Code" : "Динамический QR-код"}</DialogTitle>
-                </DialogHeader>
-                <div className="flex flex-col items-center space-y-4">
-                  <Select onValueChange={setSelectedInfo} defaultValue={selectedInfo}>
-                    <SelectTrigger
-                      className={`w-[180px] ${isDark ? "bg-gray-700 text-white" : "bg-white text-gray-900"}`}
-                    >
-                      <SelectValue placeholder="Select info to share" />
-                    </SelectTrigger>
-                    <SelectContent className={isDark ? "bg-gray-700 text-white" : "bg-white text-gray-900"}>
-                      <SelectItem value="all">{language === "en" ? "All Info" : "Вся информация"}</SelectItem>
-                      <SelectItem value="email">{language === "en" ? "Email" : "Электронная почта"}</SelectItem>
-                      <SelectItem value="phone">{language === "en" ? "Phone" : "Телефон"}</SelectItem>
-                      <SelectItem value="website">{language === "en" ? "Website" : "Веб-сайт"}</SelectItem>
-                      <SelectItem value="linkedin">LinkedIn</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <QRCodeSVG
-                    value={qrCodeData}
-                    size={200}
-                    level="H"
-                    includeMargin
-                    bgColor={isDark ? "#1e293b" : "#ffffff"}
-                    fgColor={isDark ? "#e2e8f0" : "#1e293b"}
-                    imageSettings={{
-                      src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bizfranchise-logo-300-RsMRCE1KWOaNO5ytsfyUSdrHnTANJK.png",
-                      height: 40,
-                      width: 40,
-                      excavate: true,
-                    }}
-                  />
+              </SheetTrigger>
+              <SheetContent
+                  side="bottom"
+                  className={`h-[80vh] rounded-t-2xl ${isDark ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}
+              >
+                <SheetHeader className="items-center pb-6 mb-6">
+                  <SheetTitle className="text-2xl font-bold">
+                    {language === "en" ? "Dynamic QR Code" : "Динамический QR-код"}
+                  </SheetTitle>
+                  <SheetClose className="absolute right-2 top-0 border rounded-lg border-accent text-accent">
+                    <X className="h-6 w-6"/>
+                  </SheetClose>
+                </SheetHeader>
+                <div className="flex flex-col items-center space-y-6">
+                  <div className="w-full max-w-xs">
+                    <label className="block text-sm font-medium mb-2">
+                      {language === "en" ? "Select information to share:" : "Выберите информацию для обмена:"}
+                    </label>
+                    <Select onValueChange={setSelectedInfo} defaultValue={selectedInfo}>
+                      <SelectTrigger
+                          className={`w-full ${isDark ? "bg-gray-800 text-white" : "bg-gray-100 text-gray-900"}`}
+                      >
+                        <SelectValue placeholder="Select info to share"/>
+                      </SelectTrigger>
+                      <SelectContent className={isDark ? "bg-gray-800 text-white" : "bg-white text-gray-900"}>
+                        <SelectItem value="all">{language === "en" ? "All Info" : "Вся информация"}</SelectItem>
+                        <SelectItem value="email">{language === "en" ? "Email" : "Электронная почта"}</SelectItem>
+                        <SelectItem value="phone">{language === "en" ? "Phone" : "Телефон"}</SelectItem>
+                        <SelectItem value="website">{language === "en" ? "Website" : "Веб-сайт"}</SelectItem>
+                        <SelectItem value="telegram">{language === "en" ? "Telegram" : "Телеграм"}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className={`p-2 rounded-xl relative ${isDark ? "bg-gray-800" : "bg-gray-100"}`}>
+                    <QRCodeSVG
+                        value={qrCodeData}
+                        size={350}
+                        level="H"
+                        includeMargin
+                        bgColor={isDark ? "#1e293b" : "#ffffff"}
+                        fgColor={isDark ? "#e2e8f0" : "#1e293b"}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div
+                          className={`
+                        w-12 h-12 rounded-full 
+                        ${isDark ? "bg-gray-900 text-white" : "bg-white text-gray-900"}
+                        border-2 ${isDark ? "border-gray-700" : "border-gray-200"}
+                        flex items-center justify-center
+                        font-bold text-lg
+                      `}
+                      >
+                        SA
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-center max-w-xs">
+                    {language === "en"
+                        ? "Scan this QR code to share your selected information."
+                        : "Отсканируйте этот QR-код, чтобы поделиться выбранной информацией."}
+                  </p>
                 </div>
-              </DialogContent>
-            </Dialog>
+              </SheetContent>
+            </Sheet>
           </motion.div>
 
           {/* Contact Links */}
           <div className="grid gap-3 md:grid-cols-2">
             {contactLinks.map((link, index) => (
-              <motion.a
-                key={index}
-                href={link.href}
-                target={link.href.startsWith("http") ? "_blank" : undefined}
-                rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className={`group flex items-center p-4 rounded-xl transition-all duration-300 ${
-                  isDark
-                    ? "bg-background-card hover:bg-gray-800/80 border border-gray-800"
-                    : "bg-white/80 hover:bg-white shadow-md hover:shadow-lg border border-gray-100"
-                }`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 + index * 0.1 }}
-              >
-                <link.icon className="w-6 h-6 text-primary transition-colors group-hover:text-primary-light" />
-                <div className="ml-4 flex-1">
-                  <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>
-                    {typeof link.label === "object" ? link.label[language] : link.label}
-                  </p>
-                  <p>{link.value}</p>
-                </div>
-                {link.href.startsWith("http") ? (
-                  <ArrowUpRight
-                    className={`w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 ${
-                      isDark ? "text-gray-400" : "text-gray-500"
+                <motion.a
+                    key={index}
+                    href={link.href}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className={`group flex items-center p-4 rounded-xl transition-all duration-300 ${
+                        isDark
+                            ? "bg-gray-800 hover:bg-gray-700 border border-gray-700"
+                            : "bg-white hover:bg-gray-50 shadow-md hover:shadow-lg border border-gray-200"
                     }`}
+                    initial={{opacity: 0, y: 20}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{delay: 1 + index * 0.1}}
+                >
+                  <link.icon
+                      className="w-10 h-10 text-primary bg-gray-50 border border-gray-300 rounded-lg p-2 transition-colors group-hover:text-primary-light group-hover:border-primary"
                   />
-                ) : (
-                  <Button variant="ghost" size="icon" className="shrink-0 text-gray-400 hover:text-gray-300">
-                    {link.href.startsWith("mailto") ? <Mail className="w-4 h-4" /> : <Phone className="w-4 h-4" />}
-                  </Button>
-                )}
-              </motion.a>
+                  <div className="ml-4 flex-1">
+                    <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                      {typeof link.label === "object" ? link.label[language] : link.label}
+                    </p>
+                    <p>{link.value}</p>
+                  </div>
+                  {link.href.startsWith("http") ? (
+                      <ArrowUpRight
+                          className={`w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 ${
+                              isDark ? "text-gray-400" : "text-gray-500"
+                          }`}
+                      />
+                  ) : (
+                      <Button variant="ghost" size="icon" className="shrink-0 text-gray-400 hover:text-gray-300">
+                        {link.href.startsWith("mailto") ? <Mail className="w-4 h-4"/> : <Phone className="w-4 h-4"/>}
+                      </Button>
+                  )}
+                </motion.a>
             ))}
           </div>
         </motion.div>
@@ -453,25 +512,25 @@ END:VCARD`
 
       {/* Footer */}
       <motion.footer
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="mt-12 py-6"
+          initial={{opacity: 0}}
+          animate={{opacity: 1}}
+          transition={{delay: 1.5}}
+          className="mt-12 py-6"
       >
         <div className="max-w-4xl mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-3">
             {hashtags.map((tag, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.6 + index * 0.1 }}
-                className={`text-sm font-medium px-3 py-1 rounded-full ${
-                  isDark ? "bg-gray-800 text-gray-300 hover:bg-gray-700" : "bg-gray-100 text-gray-300 hover:bg-gray-200"
-                } transition-colors duration-200 cursor-pointer`}
-              >
-                {tag}
-              </motion.span>
+                <motion.span
+                    key={index}
+                    initial={{opacity: 0, y: 10}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{delay: 1.6 + index * 0.1}}
+                    className={`text-sm font-medium px-3 py-1 rounded-full ${
+                        isDark ? "bg-gray-800 text-gray-300 hover:bg-gray-700" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    } transition-colors duration-200 cursor-pointer`}
+                >
+                  {tag}
+                </motion.span>
             ))}
           </div>
           <p className={`text-center mt-6 text-sm ${isDark ? "text-gray-500" : "text-gray-400"}`}>
@@ -483,20 +542,21 @@ END:VCARD`
       {/* QR Code Modal */}
       <AnimatePresence>
         {showQR && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            <motion.div
+                initial={{opacity: 0}}
+                animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 z-50"
             onClick={() => setShowQR(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className={`${
-                isDark ? "bg-background-card" : "bg-white"
-              } p-6 rounded-2xl max-w-sm w-full shadow-xl border ${isDark ? "border-gray-800" : "border-gray-200"}`}
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "100%", opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className={`w-full sm:w-auto sm:max-w-sm ${
+                isDark ? "bg-gray-800" : "bg-white"
+              } p-6 rounded-t-2xl sm:rounded-2xl shadow-xl border ${isDark ? "border-gray-700" : "border-gray-200"}`}
               onClick={(e) => e.stopPropagation()}
             >
               <h3 className="text-lg font-semibold mb-4 text-center">
@@ -505,15 +565,15 @@ END:VCARD`
               <div className="flex justify-center mb-4">
                 <QRCodeSVG
                   value={window.location.href}
-                  size={200}
+                  size={600}
                   level="H"
                   includeMargin
                   bgColor={isDark ? "#1e293b" : "#ffffff"}
-                  fgColor={isDark ? "#ffffff" : "#000000"}
+                  fgColor={isDark ? "#e2e8f0" : "#1e293b"}
                   imageSettings={{
                     src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bizfranchise-logo-300-RsMRCE1KWOaNO5ytsfyUSdrHnTANJK.png",
-                    height: 40,
-                    width: 40,
+                    height: 60,
+                    width: 60,
                     excavate: true,
                   }}
                 />
