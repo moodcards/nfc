@@ -399,7 +399,7 @@ END:VCARD`
                     } transition-colors text-base sm:text-lg py-4 sm:py-5`}
                 >
                   <QrCode className="w-4 h-4 mr-2"/>
-                  {language === "en" ? "QR Code" : "QR-код"}
+                  {language === "en" ? "QR-Code" : "QR-код"}
                 </Button>
               </SheetTrigger>
               <SheetContent
