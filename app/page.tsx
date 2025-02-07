@@ -373,7 +373,7 @@ END:VCARD`
                 className="w-full bg-primary hover:bg-primary-hover text-white transition-colors text-base sm:text-lg py-4 sm:py-5"
                 onClick={handleSaveContact}
             >
-              <Download className="w-6 h-6 mr-3"/>
+              <Download className="w-4 h-4 mr-2"/>
               {language === "en" ? "Save" : "Сохранить"}
             </Button>
             <Button
@@ -385,7 +385,7 @@ END:VCARD`
                 } transition-colors text-base sm:text-lg py-4 sm:py-5`}
                 onClick={handleShare}
             >
-              <Share2 className="w-5 h-5 mr-3"/>
+              <Share2 className="w-4 h-4 mr-2"/>
               {language === "en" ? "Share" : "Поделиться"}
             </Button>
             <Sheet>
@@ -398,7 +398,7 @@ END:VCARD`
                             : "border-gray-300 text-gray-800 bg-white hover:bg-gray-100"
                     } transition-colors text-base sm:text-lg py-4 sm:py-5`}
                 >
-                  <QrCode className="w-5 h-5 mr-3"/>
+                  <QrCode className="w-4 h-4 mr-2"/>
                   {language === "en" ? "QR Code" : "QR-код"}
                 </Button>
               </SheetTrigger>
