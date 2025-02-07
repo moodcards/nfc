@@ -334,8 +334,8 @@ END:VCARD`
               animate={{opacity: 1, y: 0}}
               transition={{delay: 0.6}}
               className={`mt-6 p-6 rounded-xl ${
-                  isDark ? "bg-gray-800/50 text-gray-200" : "bg-white text-gray-800"
-              } shadow-sm border`}
+                  isDark ? "bg-gray-800/50 text-gray-200 border border-gray-700" : "bg-white text-gray-800 border border-gray-200"
+              } shadow-sm `}
           >
             <div className="relative">
               <p
