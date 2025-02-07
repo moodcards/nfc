@@ -54,7 +54,7 @@ export default function ContactCard() {
 
   const contactInfo = {
     name: {
-      en: "Asylbekov Saikal",
+      en: "Saikal Asylbekova",
       ru: "Асылбекова Сайкал",
     },
     title: {
