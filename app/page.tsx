@@ -574,7 +574,7 @@ END:VCARD`
                   bgColor={isDark ? "#1e293b" : "#ffffff"}
                   fgColor={isDark ? "#e2e8f0" : "#1e293b"}
                   imageSettings={{
-                    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bizfranchise-logo-300-RsMRCE1KWOaNO5ytsfyUSdrHnTANJK.png",
+                    src: "https://asylbekova.space/logo2.png",
                     height: 60,
                     width: 60,
                     excavate: true,
