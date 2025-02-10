@@ -212,7 +212,7 @@ END:VCARD`
     >
       {/* Header Image */}
       <div className="relative h-64 sm:h-80 md:h-96">
-        <Image src="/nfc/background.jpg" alt="Cover" fill className="object-cover" />
+        <Image src="https://asylbekova.space/background.jpg" alt="Cover" fill className="object-cover" />
         <div className={`absolute inset-0 ${isDark ? "bg-gradient-dark" : "bg-gradient-light"}`} />
 
         {/* Theme & Language Toggle */}
@@ -256,7 +256,7 @@ END:VCARD`
         <div className="absolute top-4 left-4 flex items-center gap-4">
           <div className="p-2 rounded-lg transition-all duration-300 bg-white">
             <Image
-                src="/logo2.png"
+                src="https://asylbekova.space/logo2.png"
               alt="Academy of Growth Logo"
               width={120}
               height={40}
@@ -265,7 +265,7 @@ END:VCARD`
           </div>
           <div className="p-2 rounded-lg transition-all duration-300 bg-white">
             <Image
-                src="/nfc/logo1.png"
+                src="https://asylbekova.space/logo1.png"
               alt="KAFF Logo"
               width={120}
               height={40}
@@ -288,7 +288,7 @@ END:VCARD`
                   className="mb-4 md:mb-0 md:mr-6"
               >
                 <Image
-                    src="/nfc/profile.jpg"
+                    src="https://asylbekova.space/profile.jpg"
                     alt={contactInfo.name[language]}
                     width={120}
                     height={120}
@@ -574,7 +574,7 @@ END:VCARD`
                   bgColor={isDark ? "#1e293b" : "#ffffff"}
                   fgColor={isDark ? "#e2e8f0" : "#1e293b"}
                   imageSettings={{
-                    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bizfranchise-logo-300-RsMRCE1KWOaNO5ytsfyUSdrHnTANJK.png",
+                    src: "https://asylbekova.space/logo2.png",
                     height: 60,
                     width: 60,
                     excavate: true,
@@ -593,4 +593,3 @@ END:VCARD`
     </div>
   )
 }
-
