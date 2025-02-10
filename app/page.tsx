@@ -129,7 +129,7 @@ END:VCARD`
     let data = ""
     switch (info) {
       case "all":
-        data = `https://www.asylbekova.space/`
+        data = `https://asylbekova.space/`
         break
       case "email":
         data = contactInfo.email
