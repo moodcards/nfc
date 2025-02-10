@@ -1,14 +1,24 @@
-import { NextConfig } from 'next';
-
-const isProd = process.env.NODE_ENV === 'production';
+import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
+  output: "export",
   images: {
-    domains: ['asylbekova.space'],
+    unoptimized: true,
   },
-  basePath: isProd ? '/nfc' : '',
-  assetPrefix: isProd ? '/nfc/' : '',
-  trailingSlash: true, // Ensures that all routes and assets have a trailing slash for static deployment
-};
+  // Configure base path for GitHub Pages
+  basePath: process.env.NODE_ENV === "production" ? "/nfc" : "",
+  assetPrefix: process.env.NODE_ENV === "production" ? "/nfc" : "",
 
-export default nextConfig;
+  // Disable server-side features in static export
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
+  // Enable strict mode for better development experience
+  reactStrictMode: true,
+}
+
+export default nextConfig
+
