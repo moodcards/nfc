@@ -537,8 +537,16 @@ END:VCARD`
             ))}
           </div>
           <p className={`text-center mt-6 text-sm ${isDark ? "text-gray-500" : "text-gray-400"}`}>
-            © {new Date().getFullYear()} Mood Cards. All rights reserved.
-          </p>
+      © {new Date().getFullYear()} Powered by{" "}
+      <a
+        href="https://kobiljon.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`hover:underline ${isDark ? "text-gray-400" : "text-gray-500"}`}
+      >
+        Kobiljon.com
+      </a>
+    </p>
         </div>
       </motion.footer>
 
