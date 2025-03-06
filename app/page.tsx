@@ -77,8 +77,16 @@ export default function ContactCard() {
     phone: "+996 556 781 818",
     calendly: "calendly.com/saikaasylbekova",
     bio: {
-      en: "Saikal Asylbekova is a franchising expert and a leader in promoting local franchises across the CIS. She is the inspiration behind and creator of the largest network of supplementary education for children, 'Academy of Growth'. Saikal founded the first franchise packaging company 'BIZ Franchise' in Kyrgyzstan, which has helped many entrepreneurs successfully scale their businesses and enter the international market. 'BIZ Franchise' is a brokerage and consulting company founded in 2018, specializing in franchise business development in Kyrgyzstan. The company provides a wide range of services, including franchise packaging, brokerage, consulting, and trademark registration, to help entrepreneurs successfully launch and manage franchises.",
-      ru: "Асылбекова Сайкал Фридоновна — эксперт в области франчайзинга, лидер в продвижении локальных франшиз по СНГ. Она является вдохновителем и создателем крупнейшей сети дополнительного образования для детей, 'Академия Роста'. Основала первую компанию по упаковке франшиз 'BIZ Franchise' в Кыргызстане, которая помогла многим предпринимателям успешно масштабировать свои бизнесы и выйти на международный рынок. 'BIZ Franchise' — брокерская и консалтинговая компания, основанная в 2018 году, специализирующаяся на развитии франчайзингового бизнеса в Кыргызстане. Компания предоставляет широкий спектр услуг, включая упаковку франшиз, брокерство, консалтинг и регистрацию товарного знака, чтобы помочь предпринимателям успешно запускать и управлять франшизами.",
+      en: "Asylbekova Saika Fridonovna is an expert in the field of franchising, a leader in promoting local franchises " +
+          "in the CIS. Founder of the largest network of additional education for children, \"Academy of Growth\" Founded " +
+          "the first company for the development of franchises \"BIZ Franchise\" in Kyrgyzstan, which helped dozens of entrepreneurs " +
+          "successfully scale their businesses and enter the international market. \"BIZ Franchise\" is a brokerage and consulting " +
+          "company founded in 2018, specializing in the development of franchising business in Kyrgyzstan. The company provides a wide " +
+          "range of services, including franchise packaging, brokerage, consulting and support of franchises, trademark registration.",
+      ru: "Асылбекова Сайка Фридоновна — эксперт в области франчайзинга,  лидер в продвижении локальных франшиз по СНГ . Основатель крупнейшей сети дополнительного образования для детей, \"Академия Роста\n" +
+          "Основала первую компанию по разработке франшиз “BIZ Franchise” в Кыргызстане, которая помогла десяткам предпринимателям успешно масштабировать свои бизнесы и выйти на международный рынок.  \n" +
+          "\"BIZ Franchise\" — брокерская и консалтинговая компания, основанная в 2018 году, специализирующаяся на развитии франчайзингового бизнеса в Кыргызстане. Компания предоставляет широкий спектр" +
+          " услуг, включая упаковку франшиз, брокерство, консалтинг и сопровождение франшиз, регистрация товарного знака.",
     },
   }
 
